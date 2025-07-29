@@ -1,0 +1,20 @@
+name: Auto Close Issues
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+jobs:
+  autoclose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Auto Close Issues
+        uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-close-message: |
+            @${{ github.event.issue.user.login }}: hello! :wave:
+            
+            This issue is being automatically closed because it does not follow the issue template. Please make sure to fill out the template completely.
+          closed-issues-label: "closed:no-template"
